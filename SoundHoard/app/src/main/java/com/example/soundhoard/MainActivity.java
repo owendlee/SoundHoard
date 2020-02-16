@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     private Button soundboardsButton;
@@ -17,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageView myImage = findViewById(R.id.imageView);
+        myImage.setImageResource(R.drawable.soundhoard);
 
         soundboardsButton = findViewById(R.id.soundboardsButton);
         soundboardsButton.setOnClickListener(new View.OnClickListener() {
