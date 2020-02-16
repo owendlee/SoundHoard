@@ -1,5 +1,6 @@
 package com.example.soundhoard;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,6 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity(Context context, Class<?> thisClass) {
         Intent intent = new Intent(context, thisClass);
-        startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 }
