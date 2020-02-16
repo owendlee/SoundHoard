@@ -22,12 +22,14 @@
             android:layout_width="135dp"
             android:layout_height="55dp"
             android:layout_marginRight="30dp"
+            android:onClick="onClick"
             android:text="@string/soundboards"/>
 
         <Button
             android:id="@+id/settingsButton"
             android:layout_width="135dp"
             android:layout_height="55dp"
+            android:onClick="onClick"
             android:text="@string/action_settings"/>
 
     </LinearLayout>
