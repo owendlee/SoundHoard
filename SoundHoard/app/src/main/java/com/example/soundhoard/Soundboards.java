@@ -1,11 +1,14 @@
 package com.example.soundhoard;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.transition.Explode;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -66,6 +69,13 @@ public class Soundboards extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             final Soundboard data = mDataset.get(position);
             holder.mTextView.setText(data.getName());
+            holder.mTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Soundboards.this, SoundboardActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override

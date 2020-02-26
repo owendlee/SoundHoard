@@ -13,7 +13,7 @@ public class Soundboard {
     public String soundboardName;
 
     public Soundboard() {
-        setName("Example");
+        setName("Unnamed");
     }
 
     public String getName() {
