@@ -4,12 +4,13 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
+    private ImageView myImage;
     private Button soundboardsButton;
     private Button settingsButton;
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView myImage = findViewById(R.id.imageView);
+        myImage = findViewById(R.id.imageView);
         myImage.setImageResource(R.drawable.soundhoard);
 
         soundboardsButton = findViewById(R.id.soundboardsButton);
