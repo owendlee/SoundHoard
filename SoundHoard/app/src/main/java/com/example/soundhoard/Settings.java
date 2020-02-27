@@ -12,6 +12,10 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         getSupportActionBar().setTitle("Settings");
 
+        executeExplodeTransition();
+    }
+
+    public void executeExplodeTransition() {
         Explode explode = new Explode();
         explode.setDuration(1000);
         getWindow().setEnterTransition(explode);
