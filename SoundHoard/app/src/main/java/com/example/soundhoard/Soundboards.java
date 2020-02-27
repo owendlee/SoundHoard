@@ -25,6 +25,7 @@ public class Soundboards extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soundboards);
+        getSupportActionBar().setTitle("Sound Boards");
 
         Explode explode = new Explode();
         explode.setDuration(1000);
