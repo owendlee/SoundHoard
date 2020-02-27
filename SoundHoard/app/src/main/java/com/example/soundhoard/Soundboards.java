@@ -74,6 +74,7 @@ public class Soundboards extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(Soundboards.this, SoundboardActivity.class);
+                    intent.putExtra("soundboardName", data.getName());
                     startActivity(intent);
                 }
             });
