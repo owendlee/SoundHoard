@@ -110,7 +110,7 @@ public class SoundboardsActivity extends AppCompatActivity implements Soundboard
 
     public void executeExplodeTransition() {
         Explode explode = new Explode();
-        explode.setDuration(1000);
+        explode.setDuration(500);
         getWindow().setEnterTransition(explode);
     }
 
