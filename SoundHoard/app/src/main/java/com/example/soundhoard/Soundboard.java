@@ -15,7 +15,7 @@ public class Soundboard implements Serializable {
     public String soundboardName;
 
     public Soundboard() {
-        setName("Unnamed");
+        setName("");
     }
 
     public Soundboard(String name) {
