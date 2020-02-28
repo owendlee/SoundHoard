@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -104,6 +105,7 @@ public class SoundboardsActivity extends AppCompatActivity implements Soundboard
         }
         mAdapter.mDataset = (ArrayList<Soundboard>)database.soundboardDao().getAll();
         mAdapter.notifyDataSetChanged();
+        Toast.makeText(SoundboardsActivity.this, R.string.soundboards_activity_soundboard_created_toast, Toast.LENGTH_SHORT).show();
     }
 
     public void executeExplodeTransition() {
