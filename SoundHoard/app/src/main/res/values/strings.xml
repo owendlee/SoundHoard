@@ -9,4 +9,6 @@
     <string name="soundboards_activity_dialog_ok">Okay</string>
     <string name="soundboards_activity_dialog_cancel">Cancel</string>
     <string name="soundboards_activity_soundboard_created_toast">New soundboard created!</string>
+    <string name="soundboard_activity_edit_name">Edit Name</string>
+    <string name="soundboard_activity_delete_soundboard">Delete Soundboard</string>
 </resources>
