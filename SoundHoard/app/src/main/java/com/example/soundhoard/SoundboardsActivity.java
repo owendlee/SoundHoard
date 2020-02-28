@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 public class SoundboardsActivity extends AppCompatActivity {
@@ -20,6 +22,7 @@ public class SoundboardsActivity extends AppCompatActivity {
     private MyAdapter mAdapter;
     private AppDatabase database;
     private ArrayList<Soundboard> soundboards;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,14 @@ public class SoundboardsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.soundboards_activity_actionbar_title);
 
         executeExplodeTransition();
+
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);

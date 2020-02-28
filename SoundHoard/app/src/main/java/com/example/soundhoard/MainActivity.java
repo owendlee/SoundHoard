@@ -52,24 +52,24 @@ public class MainActivity extends AppCompatActivity {
     public void chooseRandomBackground() {
         rootLayout = findViewById(R.id.rootLayout);
 
-        // int randomNumber = (int)(Math.random() * (largestNumberOfBackground - 1)) + 1;
+        // int randomNumber = (int)(Math.floor(Math.random() * largestNumberForBackground) + leastNumberForBackground);
         // upper bound must be updated when additional app backgrounds are added
-        int randomNumber = (int)(Math.random() * (5 - 1)) + 1;
+        int randomNumber = (int)(Math.floor(Math.random() * 5) + 1);
         switch(randomNumber) {
             case 1:
-                rootLayout.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background1));
+                rootLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.background1));
                 return;
             case 2:
-                rootLayout.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background2));
+                rootLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.background2));
                 return;
             case 3:
-                rootLayout.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background3));
+                rootLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.background3));
                 return;
             case 4:
-                rootLayout.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background4));
+                rootLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.background4));
                 return;
             case 5:
-                rootLayout.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background5));
+                rootLayout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.background5));
                 return;
         }
     }
