@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class Soundboard {
+public class Soundboard implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int soundboard_id;
 
@@ -18,6 +20,10 @@ public class Soundboard {
 
     public Soundboard(String name) {
         setName(name);
+    }
+
+    public int getId() {
+        return this.soundboard_id;
     }
 
     public String getName() {

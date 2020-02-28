@@ -11,4 +11,7 @@
     <string name="soundboards_activity_soundboard_created_toast">New soundboard created!</string>
     <string name="soundboard_activity_edit_name">Edit Name</string>
     <string name="soundboard_activity_delete_soundboard">Delete Soundboard</string>
+    <string name="soundboard_activity_name_edited">Edited soundboard name!</string>
+    <string name="soundboard_activity_dialog_title">Edit soundboard name</string>
+    <string name="soundboard_activity_dialog_hint">New name</string>
 </resources>

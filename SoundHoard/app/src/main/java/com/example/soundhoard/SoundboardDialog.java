@@ -12,8 +12,23 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class SoundboardDialog extends AppCompatDialogFragment {
+    public static final String CREATE_DIALOG = "create";
+    public static final String UPDATE_DIALOG = "update";
+
     private EditText soundboardNameEditText;
     private SoundboardDialogListener listener;
+    private int title;
+    private int hint;
+
+    public SoundboardDialog(String mode) {
+        if(mode.equals("create")) {
+            title = R.string.soundboards_activity_dialog_title;
+            hint = R.string.soundboards_activity_dialog_hint;
+        } else if(mode.equals("update")) {
+            title = R.string.soundboard_activity_dialog_title;
+            hint = R.string.soundboard_activity_dialog_hint;
+        }
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -22,7 +37,7 @@ public class SoundboardDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.activity_soundboards_dialog, null);
 
         builder.setView(view)
-               .setTitle(R.string.soundboards_activity_dialog_title)
+               .setTitle(title)
                .setPositiveButton(R.string.soundboards_activity_dialog_ok, new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialogInterface, int i) {
@@ -38,6 +53,7 @@ public class SoundboardDialog extends AppCompatDialogFragment {
                });
 
         soundboardNameEditText = view.findViewById(R.id.dialogInput);
+        soundboardNameEditText.setHint(hint);
         return builder.create();
     }
 

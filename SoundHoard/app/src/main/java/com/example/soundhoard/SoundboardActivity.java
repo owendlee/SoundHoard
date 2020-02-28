@@ -7,16 +7,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-public class SoundboardActivity extends AppCompatActivity {
+public class SoundboardActivity extends AppCompatActivity implements SoundboardDialog.SoundboardDialogListener {
+    AppDatabase database;
+    Soundboard soundboard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soundboard);
 
         Intent intent = getIntent();
-        String soundboardName = intent.getStringExtra("soundboardName");
-        getSupportActionBar().setTitle(soundboardName);
+        soundboard = (Soundboard)intent.getSerializableExtra("soundboard");
+
+        getSupportActionBar().setTitle(soundboard.getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -33,7 +38,26 @@ public class SoundboardActivity extends AppCompatActivity {
             case android.R.id.home: // setDisplayHomeAsUpEnabled action
                 onBackPressed();
                 return true;
+            case R.id.editSoundboardName:
+                openDialog();
+            case R.id.deleteSoundboard:
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void applyText(String name) {
+        int id = soundboard.getId();
+        database = database.getInstance(this);
+
+        database.soundboardDao().updateNameById(name, id);
+        soundboard = database.soundboardDao().loadById(id);
+        getSupportActionBar().setTitle(soundboard.getName());
+        Toast.makeText(SoundboardActivity.this, R.string.soundboard_activity_name_edited, Toast.LENGTH_SHORT).show();
+    }
+
+    public void openDialog() {
+        SoundboardDialog soundboardDialog = new SoundboardDialog(SoundboardDialog.UPDATE_DIALOG);
+        soundboardDialog.show(getSupportFragmentManager(), "dialog");
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,13 @@ public class SoundboardsActivity extends AppCompatActivity implements Soundboard
         recyclerView.setAdapter(mAdapter);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.mDataset = (ArrayList<Soundboard>)database.soundboardDao().getAll();
+        mAdapter.notifyDataSetChanged();
+    }
+
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private ArrayList<Soundboard> mDataset;
 
@@ -84,7 +92,7 @@ public class SoundboardsActivity extends AppCompatActivity implements Soundboard
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(SoundboardsActivity.this, SoundboardActivity.class);
-                    intent.putExtra("soundboardName", data.getName());
+                    intent.putExtra("soundboard", data);
                     startActivity(intent);
                 }
             });
@@ -115,7 +123,7 @@ public class SoundboardsActivity extends AppCompatActivity implements Soundboard
     }
 
     public void openDialog() {
-        SoundboardDialog soundboardDialog = new SoundboardDialog();
+        SoundboardDialog soundboardDialog = new SoundboardDialog(SoundboardDialog.CREATE_DIALOG);
         soundboardDialog.show(getSupportFragmentManager(), "dialog");
     }
 }
