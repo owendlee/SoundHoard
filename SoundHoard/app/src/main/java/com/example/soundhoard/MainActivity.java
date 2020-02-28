@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView myImage;
     private Button soundboardsButton;
     private Button settingsButton;
-    ConstraintLayout rootLayout;
+    private ConstraintLayout rootLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

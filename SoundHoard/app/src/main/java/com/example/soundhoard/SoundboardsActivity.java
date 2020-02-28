@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +26,7 @@ public class SoundboardsActivity extends AppCompatActivity implements Soundboard
     private MyAdapter mAdapter;
     private AppDatabase database;
     private ArrayList<Soundboard> soundboards;
-    FloatingActionButton fab;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,25 +72,26 @@ public class SoundboardsActivity extends AppCompatActivity implements Soundboard
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
+            public CardView mCard;
             public TextView mTextView;
 
-            public ViewHolder(TextView v) {
+            public ViewHolder(View v) {
                 super(v);
-                mTextView = v;
+                mCard = v.findViewById(R.id.soundboardCardView);
+                mTextView = v.findViewById(R.id.soundboardTextView);
             }
         }
 
         @Override
         public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            TextView v = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.soundboard_item, parent, false);
+            View v = (View)LayoutInflater.from(parent.getContext()).inflate(R.layout.soundboard_item, parent, false);
             return new ViewHolder(v);
         }
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             final Soundboard data = mDataset.get(position);
-            holder.mTextView.setText(data.getName());
-            holder.mTextView.setOnClickListener(new View.OnClickListener() {
+            holder.mCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(SoundboardsActivity.this, SoundboardActivity.class);
@@ -96,6 +99,7 @@ public class SoundboardsActivity extends AppCompatActivity implements Soundboard
                     startActivity(intent);
                 }
             });
+            holder.mTextView.setText(data.getName());
         }
 
         @Override
@@ -113,7 +117,11 @@ public class SoundboardsActivity extends AppCompatActivity implements Soundboard
         }
         mAdapter.mDataset = (ArrayList<Soundboard>)database.soundboardDao().getAll();
         mAdapter.notifyDataSetChanged();
-        Toast.makeText(SoundboardsActivity.this, R.string.soundboards_activity_soundboard_created_toast, Toast.LENGTH_SHORT).show();
+        Toast.makeText(SoundboardsActivity.this, R.string.soundboards_activity_soundboard_created_toast, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void applyDelete() {
     }
 
     public void executeExplodeTransition() {

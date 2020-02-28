@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 public class SoundboardDialog extends AppCompatDialogFragment {
     public static final String CREATE_DIALOG = "create";
     public static final String UPDATE_DIALOG = "update";
+    public static final String DELETE_DIALOG = "delete";
 
     private EditText soundboardNameEditText;
     private SoundboardDialogListener listener;
@@ -27,33 +28,52 @@ public class SoundboardDialog extends AppCompatDialogFragment {
         } else if(mode.equals("update")) {
             title = R.string.soundboard_activity_dialog_title;
             hint = R.string.soundboard_activity_dialog_hint;
+        } else if(mode.equals("delete")) {
+            title = R.string.soundboard_activity_dialog_delete_title;
         }
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.activity_soundboards_dialog, null);
 
-        builder.setView(view)
-               .setTitle(title)
-               .setPositiveButton(R.string.soundboards_activity_dialog_ok, new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialogInterface, int i) {
-                        String soundboardName = soundboardNameEditText.getText().toString();
-                        listener.applyText(soundboardName);
-                   }
-               })
-               .setNegativeButton(R.string.soundboards_activity_dialog_cancel, new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialogInterface, int i) {
+        if(title == R.string.soundboard_activity_dialog_delete_title) {
+            builder.setTitle(title)
+                   .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialogInterface, int i) {
+                       }
+                   })
+                   .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialogInterface, int i) {
+                           listener.applyDelete();
+                       }
+                   });
+        } else {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.activity_soundboards_dialog, null);
 
-                   }
-               });
+            builder.setView(view)
+                    .setTitle(title)
+                    .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String soundboardName = soundboardNameEditText.getText().toString();
+                            listener.applyText(soundboardName);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-        soundboardNameEditText = view.findViewById(R.id.dialogInput);
-        soundboardNameEditText.setHint(hint);
+                        }
+                    });
+
+            soundboardNameEditText = view.findViewById(R.id.dialogInput);
+            soundboardNameEditText.setHint(hint);
+        }
+
         return builder.create();
     }
 
@@ -69,5 +89,6 @@ public class SoundboardDialog extends AppCompatDialogFragment {
 
     public interface SoundboardDialogListener {
         void applyText(String name);
+        void applyDelete();
     }
 }

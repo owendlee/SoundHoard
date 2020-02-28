@@ -69,6 +69,7 @@
             android:layout_marginRight="30dp"
             android:onClick="onClick"
             android:text="@string/soundboards"
+            android:textColor="@android:color/white"
             android:background="@drawable/main_buttons_background" />
 
         <Button
@@ -78,6 +79,7 @@
 
             android:onClick="onClick"
             android:text="@string/settings"
+            android:textColor="@android:color/white"
             android:background="@drawable/main_buttons_background" />
 
     </LinearLayout>

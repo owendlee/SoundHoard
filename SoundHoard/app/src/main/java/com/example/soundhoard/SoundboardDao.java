@@ -24,6 +24,9 @@ public interface SoundboardDao {
     @Query("UPDATE Soundboard SET soundboard_name = (:newSoundboardName) WHERE soundboard_id = (:id)")
     void updateNameById(String newSoundboardName, int id);
 
+    @Query("DELETE FROM Soundboard WHERE soundboard_id = (:id)")
+    void deleteById(int id);
+
     @Insert
     void insertAll(Soundboard... soundboards);
 
