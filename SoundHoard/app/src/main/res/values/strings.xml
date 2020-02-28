@@ -6,8 +6,8 @@
     <string name="soundboards_activity_actionbar_title">Sound Boards</string>
     <string name="soundboards_activity_dialog_hint">Name</string>
     <string name="soundboards_activity_dialog_title">Create a New Soundboard</string>
-    <string name="soundboards_activity_dialog_ok">Okay</string>
-    <string name="soundboards_activity_dialog_cancel">Cancel</string>
+    <string name="soundboards_activity_dialog_ok">OK</string>
+    <string name="soundboards_activity_dialog_cancel">CANCEL</string>
     <string name="soundboards_activity_soundboard_created_toast">New soundboard created!</string>
     <string name="soundboard_activity_edit_name">Edit Name</string>
     <string name="soundboard_activity_delete_soundboard">Delete Soundboard</string>
