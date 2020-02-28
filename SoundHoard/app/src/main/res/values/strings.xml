@@ -4,4 +4,8 @@
     <string name="soundboards">Soundboards</string>
     <string name="soundhoard_caps">SOUNDHOARD</string>
     <string name="soundboards_activity_actionbar_title">Sound Boards</string>
+    <string name="soundboards_activity_dialog_hint">Name</string>
+    <string name="soundboards_activity_dialog_title">Create a New Soundboard</string>
+    <string name="soundboards_activity_dialog_ok">Okay</string>
+    <string name="soundboards_activity_dialog_cancel">Cancel</string>
 </resources>

@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class SoundboardsActivity extends AppCompatActivity {
+public class SoundboardsActivity extends AppCompatActivity implements SoundboardDialog.SoundboardDialogListener {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private MyAdapter mAdapter;
@@ -36,7 +36,7 @@ public class SoundboardsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                openDialog();
             }
         });
 
@@ -95,9 +95,25 @@ public class SoundboardsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void applyText(String name) {
+        if(name.isEmpty()) {
+            database.soundboardDao().insertAll(new Soundboard());
+        } else {
+            database.soundboardDao().insertAll(new Soundboard(name));
+        }
+        mAdapter.mDataset = (ArrayList<Soundboard>)database.soundboardDao().getAll();
+        mAdapter.notifyDataSetChanged();
+    }
+
     public void executeExplodeTransition() {
         Explode explode = new Explode();
         explode.setDuration(1000);
         getWindow().setEnterTransition(explode);
+    }
+
+    public void openDialog() {
+        SoundboardDialog soundboardDialog = new SoundboardDialog();
+        soundboardDialog.show(getSupportFragmentManager(), "dialog");
     }
 }
