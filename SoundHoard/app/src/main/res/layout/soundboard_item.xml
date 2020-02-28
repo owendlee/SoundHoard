@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
 
     android:textSize="30dp"
-    android:background="@drawable/soundboard_background"
+    android:background="@drawable/soundboard_textview_background"
     android:layout_margin="16dp"
     android:gravity="center">
 </TextView>

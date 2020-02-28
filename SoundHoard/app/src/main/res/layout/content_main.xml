@@ -2,8 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
@@ -65,7 +68,8 @@
 
             android:layout_marginRight="30dp"
             android:onClick="onClick"
-            android:text="@string/soundboards" />
+            android:text="@string/soundboards"
+            android:background="@drawable/main_buttons_background" />
 
         <Button
             android:id="@+id/settingsButton"
@@ -73,7 +77,8 @@
             android:layout_height="55dp"
 
             android:onClick="onClick"
-            android:text="@string/action_settings" />
+            android:text="@string/action_settings"
+            android:background="@drawable/main_buttons_background" />
 
     </LinearLayout>
 
