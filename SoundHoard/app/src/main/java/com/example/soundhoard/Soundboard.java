@@ -16,6 +16,10 @@ public class Soundboard {
         setName("Unnamed");
     }
 
+    public Soundboard(String name) {
+        setName(name);
+    }
+
     public String getName() {
         return this.soundboardName;
     }
