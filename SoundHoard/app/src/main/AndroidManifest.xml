@@ -12,7 +12,7 @@
         <activity android:name=".SoundboardActivity">
         </activity>
         <activity
-            android:name=".Settings"
+            android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -21,7 +21,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".Soundboards"
+            android:name=".SoundboardsActivity"
             android:parentActivityName=".MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->

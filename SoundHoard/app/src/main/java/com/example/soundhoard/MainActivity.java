@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         soundboardsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(MainActivity.this, Soundboards.class);
+                openActivity(MainActivity.this, SoundboardsActivity.class);
             }
         });
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(MainActivity.this, Settings.class);
+                openActivity(MainActivity.this, SettingsActivity.class);
             }
         });
     }

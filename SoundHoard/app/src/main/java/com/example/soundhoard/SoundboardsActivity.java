@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class Soundboards extends AppCompatActivity {
+public class SoundboardsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private MyAdapter mAdapter;
@@ -25,7 +25,7 @@ public class Soundboards extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soundboards);
-        getSupportActionBar().setTitle("Sound Boards");
+        getSupportActionBar().setTitle(R.string.soundboards_activity_actionbar_title);
 
         executeExplodeTransition();
 
@@ -71,7 +71,7 @@ public class Soundboards extends AppCompatActivity {
             holder.mTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(Soundboards.this, SoundboardActivity.class);
+                    Intent intent = new Intent(SoundboardsActivity.this, SoundboardActivity.class);
                     intent.putExtra("soundboardName", data.getName());
                     startActivity(intent);
                 }

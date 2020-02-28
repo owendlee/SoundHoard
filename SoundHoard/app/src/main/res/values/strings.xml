@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SoundHoard</string>
-    <string name="action_settings">Settings</string>
+    <string name="settings">Settings</string>
     <string name="soundboards">Soundboards</string>
-    <string name="soundhoard">SOUNDHOARD</string>
+    <string name="soundhoard_caps">SOUNDHOARD</string>
+    <string name="soundboards_activity_actionbar_title">Sound Boards</string>
 </resources>
