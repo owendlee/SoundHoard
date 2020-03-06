@@ -71,6 +71,16 @@ public class SoundDialog extends DialogFragment {
                     .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            if(isRecording) {
+                                mediaRecorder.stop();
+                                uri = Uri.parse(path);
+                                isRecording = false;
+                                recordButton.setText(R.string.sound_dialog_start_record);
+
+                                importButton.setError(null);
+                                recordButton.setError(null);
+                            }
+
                             if(uri == null) {
                                 Toast.makeText(getActivity(), "Must import or record a sound...", Toast.LENGTH_LONG).show();
                             } else {
