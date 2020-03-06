@@ -1,9 +1,11 @@
 package com.example.soundhoard;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import java.io.IOException;
@@ -23,6 +28,8 @@ import java.util.UUID;
 import static android.app.Activity.RESULT_OK;
 
 public class SoundDialog extends DialogFragment {
+    private static final int REQUEST_PERMISSION_CODE = 3000;
+
     public static final String CREATE_DIALOG = "create";
     public static final String UPDATE_DIALOG = "update";
     public static final String DELETE_DIALOG = "delete";
@@ -93,22 +100,26 @@ public class SoundDialog extends DialogFragment {
                         importButton.setError(null);
                         recordButton.setError(null);
                     } else {
-                        try {
-                            path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + UUID.randomUUID().toString() + "_SoundHoard.3gp";
+                        if(!checkPermissions()) {
+                            requestPermissions();
+                        } else {
+                            try {
+                                path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + UUID.randomUUID().toString() + "_SoundHoard.3gp";
 
-                            mediaRecorder = new MediaRecorder();
-                            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                            mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-                            mediaRecorder.setOutputFile(path);
-                            mediaRecorder.prepare();
-                            mediaRecorder.start();
+                                mediaRecorder = new MediaRecorder();
+                                mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                                mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                                mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+                                mediaRecorder.setOutputFile(path);
+                                mediaRecorder.prepare();
+                                mediaRecorder.start();
 
-                            Toast.makeText(getActivity(), "RECORDING...", Toast.LENGTH_LONG).show();
-                            isRecording = true;
-                            recordButton.setText(R.string.sound_dialog_stop_record);
-                        } catch(IOException e) {
-                            Toast.makeText(getActivity(), "Could not record sound...", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "RECORDING...", Toast.LENGTH_LONG).show();
+                                isRecording = true;
+                                recordButton.setText(R.string.sound_dialog_stop_record);
+                            } catch(IOException e) {
+                                Toast.makeText(getActivity(), "Could not record sound...", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 }
@@ -169,5 +180,33 @@ public class SoundDialog extends DialogFragment {
     public interface SoundDialogListener {
         void applySoundText(String name, Uri uri);
         void applySoundDelete();
+    }
+
+    public void requestPermissions() {
+        ActivityCompat.requestPermissions(getActivity(), new String[] {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO
+        }, REQUEST_PERMISSION_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode) {
+            case REQUEST_PERMISSION_CODE:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getContext(), "Permission Granted!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "Permission Denied...", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
+    public boolean checkPermissions() {
+        int readExternalStorageResult = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        int writeExternalStorageResult = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int recordAudioResult = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO);
+        return readExternalStorageResult == PackageManager.PERMISSION_GRANTED && writeExternalStorageResult == PackageManager.PERMISSION_GRANTED && recordAudioResult == PackageManager.PERMISSION_GRANTED;
     }
 }
