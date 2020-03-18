@@ -30,6 +30,10 @@
     <string name="soundboard_activity_delete_soundboard">Delete Soundboard</string>
     <string name="soundboard_activity_dialog_delete_title">Are you sure you want to delete this soundboard?</string>
     <string name="soundboard_activity_soundboard_deleted">Soundboard deleted!</string>
+    <string name="soundboard_activity_edit_sound_option_title">Edit Sound</string>
+    <string name="soundboard_activity_edit_sound_option">Edit sound</string>
+    <string name="soundboard_activity_delete_sound_option_title">Are you sure you want to delete this sound?</string>
+    <string name="soundboard_activity_delete_sound_option">Delete sound</string>
 
     <!-- SoundDialog -->
     <string name="sound_dialog_start_record">RECORD</string>

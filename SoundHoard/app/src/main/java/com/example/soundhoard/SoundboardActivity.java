@@ -2,6 +2,7 @@ package com.example.soundhoard;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -22,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,8 @@ public class SoundboardActivity extends AppCompatActivity implements SoundboardD
     private LinearLayoutManager layoutManager;
     private SoundboardActivity.MyAdapter mAdapter;
     private MediaPlayer mediaPlayer;
+    private Sound soundWorker;
+    private int soundWorkerPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,12 +139,13 @@ public class SoundboardActivity extends AppCompatActivity implements SoundboardD
 
     @Override
     public void applyDelete() {
-        int id = soundboard.getId();
-        database = database.getInstance(this);
+        database.soundboardDao().deleteById(soundboard.getId());
+        database.soundboardHasSoundDao().deleteBySoundboardId(soundboard.getId());
+        for(Sound item : sounds) {
+            database.soundDao().delete(item);
+        }
 
-        database.soundboardDao().deleteById(id);
         Toast.makeText(SoundboardActivity.this, R.string.soundboard_activity_soundboard_deleted, Toast.LENGTH_LONG).show();
-
         onBackPressed();
     }
     
@@ -161,8 +166,28 @@ public class SoundboardActivity extends AppCompatActivity implements SoundboardD
     }
 
     @Override
-    public void applySoundDelete() {
+    public void applySoundEdit(String name, Uri uri) {
+        database.soundDao().updateNameById(name, soundWorker.getId());
 
+        if(uri != null) {
+            database.soundDao().updateUriById(uri.toString(), soundWorker.getId());
+        }
+
+        mAdapter.mDataset = getSounds();
+        mAdapter.notifyDataSetChanged();
+        Toast.makeText(SoundboardActivity.this, soundWorker.getName() + " has been edited!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void applySoundDelete() {
+        mAdapter.mDataset.remove(soundWorkerPosition);
+        mAdapter.notifyDataSetChanged();
+
+        database.soundDao().delete(soundWorker);
+        SoundboardHasSound temp = database.soundboardHasSoundDao().loadBySoundId(soundWorker.getId());
+        database.soundboardHasSoundDao().delete(temp);
+
+        Toast.makeText(SoundboardActivity.this, soundWorker.getName() + " has been deleted!", Toast.LENGTH_LONG).show();
     }
 
     public void openSoundDialog(String action) {
@@ -225,11 +250,13 @@ public class SoundboardActivity extends AppCompatActivity implements SoundboardD
         public class ViewHolder extends RecyclerView.ViewHolder {
             public TextView mTextView;
             public CardView mCardView;
+            public ImageButton mSoundOptionsButton;
 
             public ViewHolder(View v) {
                 super(v);
                 mTextView = v.findViewById(R.id.soundTextViewName);
                 mCardView = v.findViewById(R.id.soundCardView);
+                mSoundOptionsButton = v.findViewById(R.id.soundOptionsButton);
             }
         }
 
@@ -241,6 +268,8 @@ public class SoundboardActivity extends AppCompatActivity implements SoundboardD
 
         @Override
         public void onBindViewHolder(SoundboardActivity.MyAdapter.ViewHolder holder, int position) {
+            final int soundPosition = position;
+            final SoundboardActivity.MyAdapter.ViewHolder soundHolder = holder;
             final Sound data = mDataset.get(position);
             holder.mTextView.setText(data.getName());
             holder.mCardView.setOnClickListener(new View.OnClickListener() {
@@ -273,6 +302,33 @@ public class SoundboardActivity extends AppCompatActivity implements SoundboardD
                             Toast.makeText(SoundboardActivity.this, "Could not play sound...", Toast.LENGTH_LONG).show();
                         }
                     }
+                }
+            });
+            holder.mSoundOptionsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popup = new PopupMenu(SoundboardActivity.this, soundHolder.mSoundOptionsButton);
+                    popup.getMenuInflater().inflate(R.menu.activity_soundboard_sound_options, popup.getMenu());
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch(item.getItemId()) {
+                                case R.id.editSoundOption:
+                                    soundWorker = data;
+                                    soundWorkerPosition = soundPosition;
+                                    openSoundDialog(SoundDialog.UPDATE_DIALOG);
+                                    break;
+                                case R.id.deleteSoundOption:
+                                    soundWorker = data;
+                                    soundWorkerPosition = soundPosition;
+                                    openSoundDialog(SoundDialog.DELETE_DIALOG);
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+
+                    popup.show();
                 }
             });
         }
