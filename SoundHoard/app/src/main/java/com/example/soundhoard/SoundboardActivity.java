@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.media.AudioManager;
@@ -312,15 +314,37 @@ public class SoundboardActivity extends AppCompatActivity implements SoundboardD
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
+                            soundWorker = data;
+                            soundWorkerPosition = soundPosition;
+
                             switch(item.getItemId()) {
+                                case R.id.favoriteSoundOption:
+                                    SharedPreferences sharedPref = SoundboardActivity.this.getPreferences(Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPref.edit();
+
+                                    int numOfFavoriteSounds = sharedPref.getInt(getString(R.string.favoriteCounter), -1);
+                                    if(numOfFavoriteSounds == -1) {
+                                        editor.putInt(getString(R.string.favoriteCounter), 1);
+                                        editor.commit();
+
+                                        database.soundDao().updateFavoriteStatusById(1, data.getId());
+
+                                        Toast.makeText(SoundboardActivity.this, data.getName() + " has been favorited!", Toast.LENGTH_LONG).show();
+                                    } else if(numOfFavoriteSounds < 5) {
+                                        editor.putInt(getString(R.string.favoriteCounter), numOfFavoriteSounds+1);
+                                        editor.commit();
+
+                                        database.soundDao().updateFavoriteStatusById(1, data.getId());
+
+                                        Toast.makeText(SoundboardActivity.this, data.getName() + " has been favorited!", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(SoundboardActivity.this, "You cannot favorite more than 5 sounds...", Toast.LENGTH_LONG).show();
+                                    }
+                                    break;
                                 case R.id.editSoundOption:
-                                    soundWorker = data;
-                                    soundWorkerPosition = soundPosition;
                                     openSoundDialog(SoundDialog.UPDATE_DIALOG);
                                     break;
                                 case R.id.deleteSoundOption:
-                                    soundWorker = data;
-                                    soundWorkerPosition = soundPosition;
                                     openSoundDialog(SoundDialog.DELETE_DIALOG);
                                     break;
                             }

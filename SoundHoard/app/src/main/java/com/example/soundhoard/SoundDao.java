@@ -12,6 +12,9 @@ public interface SoundDao {
     @Query("SELECT * FROM Sound")
     List<Sound> getAll();
 
+    @Query("SELECT * FROM Sound WHERE favorite_status = 1")
+    List<Sound> getAllFavorites();
+
     @Query("SELECT * FROM Sound WHERE sound_id = (:id) LIMIT 1")
     Sound loadById(int id);
 
@@ -23,6 +26,9 @@ public interface SoundDao {
 
     @Query("UPDATE Sound SET sound_uri = (:newSoundUri) WHERE sound_id = (:id)")
     void updateUriById(String newSoundUri, int id);
+
+    @Query("UPDATE Sound SET favorite_status = (:value) WHERE sound_id = (:id)")
+    void updateFavoriteStatusById(int value, int id);
 
     @Query("DELETE FROM Sound WHERE sound_id = (:id)")
     void deleteById(int id);

@@ -35,6 +35,7 @@ public class SoundDialog extends DialogFragment {
     public static final String DELETE_DIALOG = "delete";
 
     public static final int SOUND_REQUEST_CODE = 1000;
+    public static final int SOUND_EDIT_REQUEST_CODE = 1001;
 
     private Button importButton;
     private Button recordButton;
@@ -222,7 +223,7 @@ public class SoundDialog extends DialogFragment {
                     Intent intent = new Intent();
                     intent.setType("audio/*");
                     intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-                    startActivityForResult(Intent.createChooser(intent, "open"), SOUND_REQUEST_CODE);
+                    startActivityForResult(Intent.createChooser(intent, "open"), SOUND_EDIT_REQUEST_CODE);
                 }
             });
 
@@ -262,6 +263,16 @@ public class SoundDialog extends DialogFragment {
 
                 importButton.setError("Must import or record a sound...");
                 recordButton.setError("Must import or record a sound...");
+            }
+        } else if(requestCode == SOUND_EDIT_REQUEST_CODE) {
+            if(resultCode == RESULT_OK) {
+                uri = data.getData();
+                getActivity().getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+                importButton.setError(null);
+                recordButton.setError(null);
+            } else {
+                uri = null;
             }
         }
     }

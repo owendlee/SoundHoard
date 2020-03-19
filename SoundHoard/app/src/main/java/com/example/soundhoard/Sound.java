@@ -15,14 +15,19 @@ public class Sound {
     @ColumnInfo(name = "sound_uri")
     public String soundUri;
 
+    @ColumnInfo(name = "favorite_status")
+    public boolean favorite;
+
     public Sound() {
         setName("");
         setUri(null);
+        favorite = false;
     }
 
     public Sound(String name, String uri) {
         setName(name);
         setUri(uri);
+        favorite = false;
     }
 
     public int getId() {
@@ -43,5 +48,13 @@ public class Sound {
 
     public void setUri(String uri) {
         this.soundUri = uri;
+    }
+
+    public boolean getFavorite() {
+        return this.favorite;
+    }
+
+    public void setFavorite(boolean status) {
+        this.favorite = status;
     }
 }

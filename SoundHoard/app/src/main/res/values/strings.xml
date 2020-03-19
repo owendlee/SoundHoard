@@ -34,9 +34,12 @@
     <string name="soundboard_activity_edit_sound_option">Edit sound</string>
     <string name="soundboard_activity_delete_sound_option_title">Are you sure you want to delete this sound?</string>
     <string name="soundboard_activity_delete_sound_option">Delete sound</string>
+    <string name="soundboard_activity_favorite_sound_option">Favorite sound</string>
 
     <!-- SoundDialog -->
     <string name="sound_dialog_start_record">RECORD</string>
     <string name="sound_dialog_stop_record">STOP RECORDING</string>
 
+    <!-- SharedPreferences -->
+    <string name="favoriteCounter">favoriteCounter</string>
 </resources>
