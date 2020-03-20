@@ -312,6 +312,12 @@ public class SoundboardActivity extends AppCompatActivity implements SoundboardD
                     PopupMenu popup = new PopupMenu(SoundboardActivity.this, soundHolder.mSoundOptionsButton);
                     popup.getMenuInflater().inflate(R.menu.activity_soundboard_sound_options, popup.getMenu());
 
+                    if(data.getFavorite()) {
+                        popup.getMenu().getItem(0).setTitle(R.string.soundboard_activity_unfavorite_sound_option);
+                    } else {
+                        popup.getMenu().getItem(0).setTitle(R.string.soundboard_activity_favorite_sound_option);
+                    }
+
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
                             soundWorker = data;
@@ -323,22 +329,32 @@ public class SoundboardActivity extends AppCompatActivity implements SoundboardD
                                     SharedPreferences.Editor editor = sharedPref.edit();
 
                                     int numOfFavoriteSounds = sharedPref.getInt(getString(R.string.favoriteCounter), -1);
-                                    if(numOfFavoriteSounds == -1) {
-                                        editor.putInt(getString(R.string.favoriteCounter), 1);
+
+                                    if(item.getTitle().equals("Unfavorite sound")) {
+                                        editor.putInt(getString(R.string.favoriteCounter), numOfFavoriteSounds-1);
                                         editor.commit();
 
-                                        database.soundDao().updateFavoriteStatusById(1, data.getId());
+                                        database.soundDao().updateFavoriteStatusById(0, data.getId());
 
-                                        Toast.makeText(SoundboardActivity.this, data.getName() + " has been favorited!", Toast.LENGTH_LONG).show();
-                                    } else if(numOfFavoriteSounds < 5) {
-                                        editor.putInt(getString(R.string.favoriteCounter), numOfFavoriteSounds+1);
-                                        editor.commit();
+                                        Toast.makeText(SoundboardActivity.this, data.getName() + " has been unfavorited!", Toast.LENGTH_LONG).show();
+                                    } else if(item.getTitle().equals("Favorite sound")) {
+                                        if(numOfFavoriteSounds == -1) {
+                                            editor.putInt(getString(R.string.favoriteCounter), 1);
+                                            editor.commit();
 
-                                        database.soundDao().updateFavoriteStatusById(1, data.getId());
+                                            database.soundDao().updateFavoriteStatusById(1, data.getId());
 
-                                        Toast.makeText(SoundboardActivity.this, data.getName() + " has been favorited!", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(SoundboardActivity.this, "You cannot favorite more than 5 sounds...", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(SoundboardActivity.this, data.getName() + " has been favorited!", Toast.LENGTH_LONG).show();
+                                        } else if(numOfFavoriteSounds < 5) {
+                                            editor.putInt(getString(R.string.favoriteCounter), numOfFavoriteSounds+1);
+                                            editor.commit();
+
+                                            database.soundDao().updateFavoriteStatusById(1, data.getId());
+
+                                            Toast.makeText(SoundboardActivity.this, data.getName() + " has been favorited!", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(SoundboardActivity.this, "You cannot favorite more than 5 sounds...", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                     break;
                                 case R.id.editSoundOption:
