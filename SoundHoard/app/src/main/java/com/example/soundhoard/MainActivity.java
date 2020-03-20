@@ -248,6 +248,14 @@ public class MainActivity extends AppCompatActivity {
     public void playSound(int soundIndex) {
         try {
             mediaPlayer = new MediaPlayer();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    resetButtonIcon(buttonPlaying);
+                    buttonPlaying = null;
+                    isPlayingSound = false;
+                }
+            });
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(favoriteSounds.get(soundIndex).soundUri));
             mediaPlayer.prepare();
