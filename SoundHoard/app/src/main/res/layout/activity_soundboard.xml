@@ -51,7 +51,7 @@
 
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/soundboards_activity_fab_margin"
-            app:srcCompat="@android:drawable/radiobutton_off_background"
+            app:srcCompat="@android:drawable/ic_media_pause"
             app:backgroundTint="@android:color/holo_blue_light"
             android:tint="@android:color/white" />
 
