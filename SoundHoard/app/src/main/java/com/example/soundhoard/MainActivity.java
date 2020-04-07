@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         settingsButton = findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 openActivity(MainActivity.this, SettingsActivity.class);
             }
         });
+        */
     }
 
     public void openActivity(Context context, Class<?> thisClass) {

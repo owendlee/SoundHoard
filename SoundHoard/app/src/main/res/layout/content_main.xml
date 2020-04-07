@@ -157,12 +157,13 @@
             android:layout_width="135dp"
             android:layout_height="55dp"
 
-            android:layout_marginRight="30dp"
             android:onClick="onClick"
             android:text="@string/soundboards"
             android:textColor="@android:color/white"
             android:background="@drawable/main_buttons_background" />
+        <!--android:layout_marginRight="30dp"-->
 
+        <!--
         <Button
             android:id="@+id/settingsButton"
             android:layout_width="135dp"
@@ -172,6 +173,7 @@
             android:text="@string/settings"
             android:textColor="@android:color/white"
             android:background="@drawable/main_buttons_background" />
+        -->
 
     </LinearLayout>
 
